@@ -12,7 +12,6 @@ sap.ui.define([
 			this.aTabFilters = [];
 		},
 
-
 		/**
 		 * Adds a new todo item to the bottom of the list.
 		 */
