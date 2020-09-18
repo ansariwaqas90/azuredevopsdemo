@@ -29,5 +29,8 @@ steps:
     npm install karma --save-dev
   displayName: 'Install Karma'
 - script: |
+    npm install karma-cli
+  displayName: 'Install karma-Cli'
+- script: |
     npm run karma-ci
   displayName: 'Run unit test and opa test'
