@@ -26,5 +26,8 @@ steps:
     npm run lint
   displayName: 'Run eslint'
 - script: |
+    npm install karma --save-dev
+  displayName: 'Install Karma'
+- script: |
     npm run karma-ci
   displayName: 'Run unit test and opa test'
