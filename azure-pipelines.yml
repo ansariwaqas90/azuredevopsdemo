@@ -32,5 +32,8 @@ steps:
     npm install karma-cli
   displayName: 'Install karma-Cli'
 - script: |
+    npm i -g rimraf
+  displayName: 'Install rimraf'
+- script: |
     npm run karma-ci
   displayName: 'Run unit test and opa test'
