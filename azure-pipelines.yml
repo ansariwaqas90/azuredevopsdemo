@@ -10,10 +10,12 @@ pool:
 variables:
   isMain: $[eq(variables['Build.SourceBranch'], 'refs/heads/master')]
 stages:
-- stage: NPMInstall
-  displayName: NPM Install
+- stage: PluginInstall
+  displayName: installation
+  condition: and(succeeded(), eq(variables.isMain, true))
   jobs:
-    - job: NpmInstall
+    - job: InstallPlugin
+      displayName: Install Plugin
       steps:
       - task: NodeTool@0
         inputs:
@@ -23,14 +25,6 @@ stages:
           npm config set @sap:registry "https://npm.sap.com"
           npm install
         displayName: 'npm install'
-- stage: PluginInstall
-  displayName: Install Plugin
-  dependsOn: NPMInstall
-  condition: and(succeeded(), eq(variables.isMain, true))
-  jobs:
-    - job: InstallPlugin
-      displayName: Install Plugin
-      steps:
       - script: |
           npm install --save-dev eslint
         displayName: 'Install eslint'
@@ -44,9 +38,6 @@ stages:
           npm i -g rimraf
         displayName: 'Install rimraf'
       - script: |
-          npm install --global @ui5/cli
-        displayName: 'UI5-cli'
-      - script: |
           npm install -g grunt-nwabap-ui5uploader
         displayName: Install grunt ui5 uploader
 - stage: ReviewTest
@@ -55,19 +46,15 @@ stages:
   condition: and(succeeded(), eq(variables.isMain, true))
   jobs:
     - job: RunReview
-      displayName: Code Review
+      displayName: UI5 and Opa Test
       steps:
       - script: |
           npm run lint
         displayName: 'Run eslint'
-    - job: RunTest
-      displayName: UI5 test
-      dependsOn: RunReview
-      steps:
       - script: |
           npm run karma-ci
         displayName: 'Run unit test and opa test'
-- stage: BuildDeploy
+- stage: Build
   displayName: Build and Deploy
   dependsOn: ReviewTest
   condition: and(succeeded(), eq(variables.isMain, true))
@@ -76,11 +63,18 @@ stages:
       displayName: Build UI5
       steps:
       - script: |
+          npm install --global @ui5/cli
+        displayName: 'UI5-cli'
+      - script: |
           ui5 build -a --clean-dest
         displayName: 'Build Application'
+- stage: Deploy
+  displayName: Deploy
+  dependsOn: ReviewTest
+  condition: and(succeeded(), eq(variables.isMain, true))
+  jobs:
     - job: deploycode
-      displayName: Deploy Code
-      dependsOn: buildcode
+      displayName: Deploy to Gateway
       steps:
       - script: |
           grunt --username="DEV_ECQ2" --password="Welcome1" --server="http://in-blr-1709:8000" --request="S48K901584" --pkg="ZAZUREDEVOPS"
