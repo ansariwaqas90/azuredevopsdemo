@@ -23,6 +23,8 @@ stages:
             npm config set @sap:registry "https://npm.sap.com"
             npm install
           displayName: 'npm install'
+    - job: Eslint
+      steps:
         - script: |
             npm install --save-dev eslint
           displayName: 'Install eslint'
