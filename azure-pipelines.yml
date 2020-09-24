@@ -23,6 +23,14 @@ stages:
           npm config set @sap:registry "https://npm.sap.com"
           npm install
         displayName: 'npm install'
+- stage: PluginInstall
+  displayName: Install Plugin
+  dependsOn: NPMInstall
+  condition: and(succeeded(), eq(variables.isMain, true))
+  jobs:
+    - job: InstallPlugin
+      displayName: Install Plugin
+      steps:
       - script: |
           npm install --save-dev eslint
         displayName: 'Install eslint'
@@ -41,23 +49,39 @@ stages:
       - script: |
           npm install -g grunt-nwabap-ui5uploader
         displayName: Install grunt ui5 uploader
-- stage: PluginInstall
-  displayName: Install Plugin
-  dependsOn: NPMInstall
+- stage: ReviewTest
+  displayName: Review and Test
+  dependsOn: PluginInstall
   condition: and(succeeded(), eq(variables.isMain, true))
   jobs:
-    - job: Runtest
-      displayName: Run Test
+    - job: RunReview
+      displayName: Code Review
       steps:
       - script: |
           npm run lint
         displayName: 'Run eslint'
+    - job: RunTest
+      displayName: UI5 test
+      dependsOn: RunReview
+      steps:
       - script: |
           npm run karma-ci
         displayName: 'Run unit test and opa test'
+- stage: BuildDeploy
+  displayName: Build and Deploy
+  dependsOn: ReviewTest
+  condition: and(succeeded(), eq(variables.isMain, true))
+  jobs:
+    - job: buildcode
+      displayName: Build UI5
+      steps:
       - script: |
           ui5 build -a --clean-dest
         displayName: 'Build Application'
+    - job: deploycode
+      displayName: Deploy Code
+      dependsOn: buildcode
+      steps:
       - script: |
           grunt --username="DEV_ECQ2" --password="Welcome1" --server="http://in-blr-1709:8000" --request="S48K901584" --pkg="ZAZUREDEVOPS"
         displayName: 'Deploy process'
