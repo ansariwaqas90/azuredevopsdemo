@@ -29,7 +29,6 @@ stages:
 - stage: PluginInstall
   displayName: Install Plugin
   dependsOn: NPMInstall
-  condition: and(succeeded(), eq(variables.isMain, true))
   jobs:
     - job: Runtest
       displayName: Run Test
