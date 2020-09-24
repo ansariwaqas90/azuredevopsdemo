@@ -55,7 +55,7 @@ stages:
           npm run karma-ci
         displayName: 'Run unit test and opa test'
 - stage: Build
-  displayName: Build and Deploy
+  displayName: Build
   dependsOn: ReviewTest
   condition: and(succeeded(), eq(variables.isMain, true))
   jobs:
