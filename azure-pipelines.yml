@@ -22,12 +22,6 @@ stages:
               npm config set @sap:registry "https://npm.sap.com"
               npm install
           displayName: 'npm install'
-- stage: InstallPlugin
-  displayName: Install Plugin
-  dependsOn: NPMInstall
-  jobs:
-    - job: InstallPlugin
-      steps:
         - script: |
             'npm install --save-dev eslint'
           displayName: 'Install eslint'
@@ -48,7 +42,7 @@ stages:
           displayName: 'Install grunt grunt-cli'
 - stage: Testing
   displayName: Review and test
-  dependsOn: InstallPlugin
+  dependsOn: NPMInstall
   jobs:
     - job: Review
       steps:
