@@ -26,6 +26,21 @@ stages:
       - script: |
           npm install --save-dev eslint
         displayName: 'Install eslint'
+      - script: |
+          npm install karma --save-dev
+        displayName: 'Install Karma'
+      - script: |
+          npm install karma-cli
+        displayName: 'Install karma-Cli'
+      - script: |
+          npm i -g rimraf
+        displayName: 'Install rimraf'
+      - script: |
+          npm install --global @ui5/cli
+        displayName: 'UI5-cli'
+      - script: |
+          npm install -g grunt grunt-cli grunt-nwabap-ui5uploader
+        displayName: Install grunt grunt-cli
 - stage: PluginInstall
   displayName: Install Plugin
   dependsOn: NPMInstall
@@ -38,26 +53,11 @@ stages:
           npm run lint
         displayName: 'Run eslint'
       - script: |
-          npm install karma --save-dev
-        displayName: 'Install Karma'
-      - script: |
-          npm install karma-cli
-        displayName: 'Install karma-Cli'
-      - script: |
-          npm i -g rimraf
-        displayName: 'Install rimraf'
-      - script: |
           npm run karma-ci
         displayName: 'Run unit test and opa test'
       - script: |
-          npm install --global @ui5/cli
-        displayName: 'UI5-cli'
-      - script: |
           ui5 build -a --clean-dest
         displayName: 'Build Application'
-      - script: |
-          npm install -g grunt grunt-cli grunt-nwabap-ui5uploader
-        displayName: Install grunt grunt-cli
       - script: |
           grunt --username="DEV_ECQ2" --password="Welcome1" --server="http://in-blr-1709:8000" --request="S48K901584" --pkg="ZAZUREDEVOPS"
         displayName: 'Deploy process'
