@@ -24,6 +24,10 @@ stages:
               npm config set @sap:registry "https://npm.sap.com"
               npm install
           displayName: 'npm install'
+- stage: InstallPlugin
+  displayName: Install Plugin
+  dependsOn: Build
+  jobs:
     - job: InstallPlugin
       steps:
         - task: CmdLine@2
@@ -64,7 +68,7 @@ stages:
             ui5 build -a --clean-dest
           displayName: 'Build Application'
     - job: Deploy
-      steps:     
+      steps:
         - script: |
             grunt --username="DEV_ECQ2" --password="Welcome1" --server="http://in-blr-1709:8000" --request="S48K901584" --pkg="ZAZUREDEVOPS"
           displayName: 'Deploy process'
