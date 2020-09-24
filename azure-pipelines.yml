@@ -11,6 +11,8 @@ pool:
 stages:
 - stage: NPMInstall
   displayName: NPM Install
+  pool:
+    vmImage: 'ubuntu-latest'
   jobs:
     - job: NpmInstall
       steps:
