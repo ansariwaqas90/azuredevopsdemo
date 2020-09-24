@@ -5,7 +5,6 @@
 
 trigger:
 - master
-
 pool:
   vmImage: 'ubuntu-latest'
 
@@ -14,7 +13,12 @@ steps:
   inputs:
     versionSpec: '10.x'
   displayName: 'Install Node.js'
-
+- task: CmdLine@2
+  inputs:
+    script: |
+      echo Write your commands here
+      
+      echo Hello world
 - script: |
     npm config set @sap:registry "https://npm.sap.com"
     npm install
