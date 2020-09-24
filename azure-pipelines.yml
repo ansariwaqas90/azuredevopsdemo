@@ -25,8 +25,9 @@ stages:
           displayName: 'npm install'
     - job: Eslint
       steps:
-        - script: |
-            npm install --save-dev eslint
+        - task: CmdLine@2
+          inputs:
+            script: 'npm install --save-dev eslint'
           displayName: 'Install eslint'
         - script: |
             npm run lint
