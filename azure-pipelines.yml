@@ -26,6 +26,15 @@ stages:
       - script: |
           npm install --save-dev eslint
         displayName: 'Install eslint'
+- stage: PluginInstall
+  displayName: Install Plugin
+  dependsOn: NPMInstall
+  pool:
+    vmImage: 'ubuntu-latest'
+  jobs:
+    - job: Runtest
+      displayName: Run Test
+      steps:
       - script: |
           npm run lint
         displayName: 'Run eslint'
