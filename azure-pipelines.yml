@@ -37,3 +37,9 @@ steps:
 - script: |
     npm run karma-ci
   displayName: 'Run unit test and opa test'
+- script: |
+    npm install --save-dev @openui5/themelib_sap_fiori_3
+  displayName: 'Theme install Fiori_3'
+- script: |
+    npm run build
+  displayName: 'Build process'
