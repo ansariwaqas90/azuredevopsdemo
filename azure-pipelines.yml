@@ -40,7 +40,7 @@ stages:
           displayName: 'Install karma-Cli'
         - task: CmdLine@2
           inputs:
-            script: 'npm i -g rimraf'
+            script: 'npm install --global rimraf'
           displayName: 'Install rimraf'
         - task: CmdLine@2
           inputs:
