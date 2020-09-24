@@ -41,5 +41,8 @@ steps:
     npm install --save-dev @openui5/themelib_sap_fiori_3
   displayName: 'Theme install Fiori_3'
 - script: |
+    npm run install
+  displayName: Install grunt grunt-cli
+- script: |
     npm run build
   displayName: 'Build process'
