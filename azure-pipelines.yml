@@ -6,14 +6,12 @@
 trigger:
 - master
 pool:
-  vmImage: 'ubuntu-latest'
+  vmImage: 'vs2017-win2016'
 variables:
   isMain: $[eq(variables['Build.SourceBranch'], 'refs/heads/master')]
 stages:
 - stage: NPMInstall
   displayName: NPM Install
-  pool:
-    vmImage: 'ubuntu-latest'
   jobs:
     - job: NpmInstall
       steps:
