@@ -7,6 +7,8 @@ trigger:
 - master
 pool:
   vmImage: 'ubuntu-latest'
+variables:
+  isMain: $[eq(variables['Build.SourceBranch'], 'refs/heads/master')]
 stages:
 - stage: NPMInstall
   displayName: NPM Install
@@ -29,8 +31,7 @@ stages:
 - stage: PluginInstall
   displayName: Install Plugin
   dependsOn: NPMInstall
-  pool:
-    vmImage: 'ubuntu-latest'
+  condition: and(succeeded(), eq(variables.isMain, true))
   jobs:
     - job: Runtest
       displayName: Run Test
