@@ -9,8 +9,8 @@ pool:
   vmImage: 'ubuntu-latest' 
 
 stages:
-- stage: Build
-  displayName: Build
+- stage: NPMInstall
+  displayName: NPM Install
   jobs:
     - job: NpmInstall
       steps:
@@ -18,50 +18,52 @@ stages:
           inputs:
             versionSpec: '10.x'
           displayName: 'Install Node.js'
-        - task: CmdLine@2
-          inputs:
-            script: |
+        - script: |
               npm config set @sap:registry "https://npm.sap.com"
               npm install
           displayName: 'npm install'
 - stage: InstallPlugin
   displayName: Install Plugin
-  dependsOn: Build
+  dependsOn: NPMInstall
   jobs:
     - job: InstallPlugin
       steps:
-        - task: CmdLine@2
-          inputs:
-            script: 'npm install --save-dev eslint'
+        - script: |
+            'npm install --save-dev eslint'
           displayName: 'Install eslint'
-        - task: CmdLine@2
-          inputs:
-            script: 'npm install karma --save-dev'
-          displayName: 'Install Karma'
-        - task: CmdLine@2
-          inputs:
-            script: 'npm install karma-cli'
+        - script: |
+            'npm install karma --save-dev'
+          displayName: 'Install Karma' 
+        - script: |
+            'npm install karma-cli'
           displayName: 'Install karma-Cli'
-        - task: CmdLine@2
-          inputs:
-            script: 'npm install --global rimraf'
+        - script: |
+            'npm install --global rimraf'
           displayName: 'Install rimraf'
-        - task: CmdLine@2
-          inputs:
-            script: 'npm install --global @ui5/cli'
+        - script: |
+            'npm install --global @ui5/cli'
           displayName: 'Install UI5-cli'        
-        - task: CmdLine@2
-          inputs:
-            script: 'npm install -g grunt grunt-cli grunt-nwabap-ui5uploader'
+        - script: |
+            'npm install -g grunt grunt-cli grunt-nwabap-ui5uploader'
           displayName: 'Install grunt grunt-cli'
-    - job: ReviewAndTest
+- stage: Testing
+  displayName: Review and test
+  dependsOn: InstallPlugin
+  jobs:
+    - job: Review
       steps:
         - script: |
             npm run lint
           displayName: 'Run eslint'
+    - job: UI5test
+      steps:
         - script: |
             npm run karma-ci
           displayName: 'Run unit test and opa test'
+- stage: Build
+  displayName: Build And Deploy
+  dependsOn: Testing
+  jobs:
     - job: Build
       steps:    
         - script: |
