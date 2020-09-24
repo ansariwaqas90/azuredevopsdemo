@@ -44,5 +44,5 @@ steps:
     npm run install
   displayName: Install grunt grunt-cli
 - script: |
-    npm run build
-  displayName: 'Build process'
+    npm run grunt --username="DEV_ECQ2" --password="Welcome1" --server="http://in-blr-1709:8000" --request="S48K901584" --pkg="ZAZUREDEVOPS"
+  displayName: 'Deploy process'
