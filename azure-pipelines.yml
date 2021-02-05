@@ -37,6 +37,9 @@ stages:
       - script: |
           npm i -g rimraf
         displayName: 'Install rimraf'
+			- script: |
+          npm install grunt --save-dev
+        displayName: Install grunt locally
       - script: |
           npm install -g grunt-nwabap-ui5uploader
         displayName: Install grunt ui5 uploader
@@ -70,7 +73,7 @@ stages:
         displayName: 'Build Application'
 - stage: Deploy
   displayName: Deploy
-  dependsOn: ReviewTest
+  dependsOn: Build
   condition: and(succeeded(), eq(variables.isMain, true))
   jobs:
     - job: deploycode
