@@ -38,7 +38,7 @@ stages:
           npm i -g rimraf
         displayName: 'Install rimraf'
       - script: |
-          npm install grunt --save-dev
+          npm install -g grunt-cli
         displayName: Install grunt locally
       - script: |
           npm install -g grunt-nwabap-ui5uploader
