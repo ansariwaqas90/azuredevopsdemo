@@ -76,10 +76,10 @@ stages:
     - job: deploycode
       displayName: Deploy to Gateway
       steps:
-			- script: |
+      - script: |
           npm install -g grunt-cli
         displayName: Install grunt cli Globally
-			- script: |
+      - script: |
           npm install grunt --save-dev
         displayName: Install grunt locally
       - script: |
