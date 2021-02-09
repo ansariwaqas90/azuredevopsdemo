@@ -82,6 +82,9 @@ stages:
       - script: |
           npm install grunt --save-dev
         displayName: Install grunt locally
+			- script: |
+          npm install grunt-nwabap-ui5uploader --save-dev
+        displayName: Install grunt ui5uploader locally
       - script: |
           grunt --username="DEV_ECQ2" --password="Welcome1" --server="http://in-blr-1709:8000" --request="S48K901584" --pkg="ZAZUREDEVOPS"
         displayName: 'Deploy process'
