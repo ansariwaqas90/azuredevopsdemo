@@ -82,7 +82,7 @@ stages:
       - script: |
           npm install grunt --save-dev
         displayName: Install grunt locally
-			- script: |
+      - script: |
           npm install grunt-nwabap-ui5uploader --save-dev
         displayName: Install grunt ui5uploader locally
       - script: |
