@@ -65,7 +65,7 @@ stages:
       - script: |
           npm install --global @ui5/cli
         displayName: 'UI5-cli'
-			- script: |
+      - script: |
           ui5 add --optional themelib_sap_fiori_3
         displayName: 'Adding Theme lib Sap fiori_3'			
       - script: |
