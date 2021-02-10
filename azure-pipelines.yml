@@ -37,7 +37,7 @@ stages:
       - script: |
           npm i -g rimraf
         displayName: 'Install rimraf'
-			- script: |
+      - script: |
           npm install -g grunt-nwabap-ui5uploader
         displayName: Install grunt ui5 uploader
 - stage: ReviewTest
