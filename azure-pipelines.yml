@@ -85,3 +85,4 @@ stages:
       - script: |
           grunt --username="DEV_ECQ2" --password="Welcome1" --server="http://in-blr-1709:8000" --request="S48K901584" --pkg="ZAZUREDEVOPS"
         displayName: 'Deploy process'
+				
