@@ -67,7 +67,7 @@ stages:
         displayName: 'UI5-cli'
       - script: |
           ui5 add themelib_sap_fiori_3
-	displayName: 'Add theme'
+	displayName: 'Add theme fiori3'
       - script: |
           ui5 build -a --clean-dest
         displayName: 'Build Application'
